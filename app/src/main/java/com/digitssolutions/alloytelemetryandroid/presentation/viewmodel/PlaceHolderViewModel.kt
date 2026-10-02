@@ -20,7 +20,7 @@ const val API_KEY = "069de1d1938f6e8bd8e2096127ef987e"
 
 
 @HiltViewModel
-class MoviesViewModel @Inject constructor (
+class PlaceHolderViewModel @Inject constructor (
     private val moviesRepository: MoviesRepository<DataPlaceHolderInstance>
 ) : ViewModel() {
     private val _moviesUIState = MutableStateFlow<MoviesUIState>(MoviesUIState.Loading(true))
@@ -55,7 +55,7 @@ class MoviesViewModel @Inject constructor (
             }
         }
 
-    // Prevent 2nd click re-process the
+    // Prevent 2nd click from take effect
     fun onTabClicked(screen: Screen) {
         val currentTag = _backStack.value.lastOrNull()
 
@@ -68,9 +68,7 @@ class MoviesViewModel @Inject constructor (
         }
 
         // 2. If already active, ignore the click (prevents re-triggering heavy lifting)
-        if(isAlreadyActive as Boolean) {
-            return
-        }
+        if(isAlreadyActive as Boolean) { return }
 
         // 3. Otherwise, perform navigation (and any associated heavy lifting)
         navigateTo(screen)

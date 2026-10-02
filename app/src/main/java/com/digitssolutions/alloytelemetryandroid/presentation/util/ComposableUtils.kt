@@ -12,14 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.digitssolutions.alloytelemetryandroid.presentation.screen.Screen
-import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.MoviesViewModel
+import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.PlaceHolderViewModel
 
 
 /**
  * This method implements navigation-bar items
  */
 @Composable
-fun Navigate(viewModel: MoviesViewModel) {
+fun Navigate(viewModel: PlaceHolderViewModel) {
     val currentScreen by viewModel.backStack.collectAsState()
     val activeScreen = currentScreen.lastOrNull()
 
@@ -28,19 +28,25 @@ fun Navigate(viewModel: MoviesViewModel) {
             icon = { Icon(Icons.Default.Home, contentDescription = "Dashboard") },
             label = { Text("Dashboard") },
             selected = activeScreen is Screen.Dashboard,
-            onClick = { viewModel.navigateTo(Screen.Dashboard(null)) }
+            onClick = {
+                viewModel.onTabClicked(Screen.Dashboard(null))
+            }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
             label = { Text("Settings") },
             selected = activeScreen is Screen.Settings,
-            onClick = { viewModel.navigateTo(Screen.Settings) },
+            onClick = {
+                viewModel.onTabClicked(Screen.Settings)
+            }
         )
         NavigationBarItem(
             icon = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Movies Loader") },
             label = { Text("Movies") },
             selected = activeScreen is Screen.Explorer || activeScreen is Screen.Loading,
-            onClick = { viewModel.navigateTo(Screen.Explorer) }
+            onClick = {
+                viewModel.onTabClicked(Screen.Explorer)
+            }
         )
     }
 }

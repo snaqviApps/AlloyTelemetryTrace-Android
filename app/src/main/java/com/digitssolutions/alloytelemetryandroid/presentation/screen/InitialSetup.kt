@@ -23,14 +23,14 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.digitssolutions.alloytelemetryandroid.presentation.MoviesUIState
 import com.digitssolutions.alloytelemetryandroid.presentation.util.Navigate
-import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.MoviesViewModel
+import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.PlaceHolderViewModel
 import com.digitssolutions.alloytelemetryandroid.ui.theme.AlloyTelemetryAndroidTheme
 
 
 @Composable
 fun InitialSetup(
     innerPadding: PaddingValues,
-    viewModel: MoviesViewModel = hiltViewModel()
+    viewModel: PlaceHolderViewModel = hiltViewModel()
 ) {
     val moviesUIState by viewModel.moviesUIState.collectAsStateWithLifecycle()
     val currentScreen by viewModel.backStack.collectAsState()
