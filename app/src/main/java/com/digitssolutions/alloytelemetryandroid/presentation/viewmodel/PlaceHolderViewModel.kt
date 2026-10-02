@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 const val API_KEY = "069de1d1938f6e8bd8e2096127ef987e"
 
-
 @HiltViewModel
 class PlaceHolderViewModel @Inject constructor (
     private val moviesRepository: MoviesRepository<DataPlaceHolderInstance>

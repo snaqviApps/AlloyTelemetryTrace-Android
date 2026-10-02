@@ -1,5 +1,8 @@
 package com.digitssolutions.alloytelemetryandroid.domain.model
 
+/**
+ * Movie-Item in Movies
+ */
 data class DataPlaceHolderInstance (
     val adult: Boolean?,
     val backdropPath: String?,
