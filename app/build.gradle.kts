@@ -7,13 +7,13 @@ plugins {
 }
 
 android {
-    namespace = "com.digitssolutions.moviesreviewthree"
+    namespace = "com.digitssolutions.alloytelemetryandroid"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.digitssolutions.moviesreviewthree"
+        applicationId = "com.digitssolutions.alloytelemetryandroid"
         minSdk = 26
         targetSdk = 37
         versionCode = 1

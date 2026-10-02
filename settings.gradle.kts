@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MoviesReviewThree"
+rootProject.name = "AlloyTelemetryAndroid"
 include(":app")
  
