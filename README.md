@@ -3,7 +3,7 @@
 
 This App is a reference-shell for clean architecture, along with Scaffold-provided UI utilities, namely: topBar, baseBar, and content blocks, with innerPadding to coordinate due system-bars, margins: [status-bar at top, bottom-bar and Camera-pin-hole cut-outs].
 
-## Branch: `dashboard-system-health-check-telemetry`
+<b>Branch:</b> `dashboard-system-health-check-telemetry`
 
 This branch implements a System-level health check or Pre-Flight Readiness matrix, providing Telemetry data, currently planned as:
 
