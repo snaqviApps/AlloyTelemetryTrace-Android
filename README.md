@@ -1,3 +1,5 @@
+# Reference Shell Architecture
+
 This App is a reference-shell for clean architecture, along with Scaffold-provided UI utilities, 
 namely: topBar, baseBar, and content blocks, with innerPadding to coordinate due system-bars, 
 margins: [status-bar at top, bottom-bar and Camera-pin-hole cut-outs]
@@ -21,10 +23,11 @@ currently planned as:
 │  [ ANALYZE N DISPLAY (OFFLINE) ]       │
 └────────────────────────────────────────┘
 
-while above Buttons:
-- START RECORDING (15m): Data-Acquisition and saving to memory, it turns Off automatically after 15 minutes
-- START LIVE INSPECTOR: Starts Data-Acquisition from A/V sensors with Analysis (5 minutes limit)
-- ANALYZE N DISPLAY: This is 'Offline' mode, for retrieving, 
+
+<b>START RECORDING (15m)</b>:     Data-Acquisition and saving to memory; turns off automatically after 15 minutes.</br>
+<b>START LIVE INSPECTOR</b>:      Starts Data-Acquisition from A/V sensors with Analysis (5 minutes limit).</br>
+<b>ANALYZE N DISPLAY:</b>        'Offline' mode for retrieving and displaying pre-recorded data.</br>
+
  -----------------
 - Tasks done:
 - moved architecture to 04 modules
@@ -35,3 +38,4 @@ while above Buttons:
 
 - refactoring: 
   - moved endPoint @PlaceHoderViewModel.kt to MutableStateFlow() to decouple from Compose-runtime library
+### Operational Modes:
