@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.digitssolutions.alloytelemetryandroid.domain.model.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
 
 @Composable
 fun MovieCard(

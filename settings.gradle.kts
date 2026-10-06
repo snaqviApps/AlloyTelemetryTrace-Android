@@ -24,4 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "AlloyTelemetryAndroid"
 include(":app")
- 
+include(":core:domain")
+include(":core:data")
+include(":feature:placeholder:presentation")
+include(":feature:placeholder:data")

@@ -25,4 +25,13 @@ while above Buttons:
 - START RECORDING (15m): Data-Acquisition and saving to memory, it turns Off automatically after 15 minutes
 - START LIVE INSPECTOR: Starts Data-Acquisition from A/V sensors with Analysis (5 minutes limit)
 - ANALYZE N DISPLAY: This is 'Offline' mode, for retrieving, 
- 
+ -----------------
+- Tasks done:
+- moved architecture to 04 modules
+  - core:domain
+  - core:data
+  - feature:placeholder:data
+  - feature:placeholder:presentation ----> it has currently the Placehoder data (movies-List)
+
+- refactoring: 
+  - moved endPoint @PlaceHoderViewModel.kt to MutableStateFlow() to decouple from Compose-runtime library
