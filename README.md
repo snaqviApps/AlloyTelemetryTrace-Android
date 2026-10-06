@@ -23,7 +23,7 @@ currently planned as:
 │  [ ANALYZE N DISPLAY (OFFLINE) ]       │
 └────────────────────────────────────────┘
 
-
+### Operational Modes:
 <b>START RECORDING (15m)</b>:     Data-Acquisition and saving to memory; turns off automatically after 15 minutes.</br>
 <b>START LIVE INSPECTOR</b>:      Starts Data-Acquisition from A/V sensors with Analysis (5 minutes limit).</br>
 <b>ANALYZE N DISPLAY:</b>        'Offline' mode for retrieving and displaying pre-recorded data.</br>
@@ -38,4 +38,4 @@ currently planned as:
 
 - refactoring: 
   - moved endPoint @PlaceHoderViewModel.kt to MutableStateFlow() to decouple from Compose-runtime library
-### Operational Modes:
+
