@@ -40,7 +40,19 @@ android {
 
 dependencies {
 
+    // custom Library-Modules
 
+    //core:domain
+    implementation(project(":core:domain"))
+
+    //core:data
+    implementation(project(":core:data"))
+
+    //:feature:placeholder:presentation
+    implementation(project(":feature:placeholder:data"))
+    implementation(project(":feature:placeholder:presentation"))
+
+    
     //Test
     testImplementation(libs.kotlinx.coroutines.test)
 

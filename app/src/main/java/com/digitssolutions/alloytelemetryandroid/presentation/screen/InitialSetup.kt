@@ -12,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,20 +20,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.digitssolutions.alloytelemetryandroid.presentation.MoviesUIState
+import com.digitssolutions.alloytelemetryandroid.core.domain.navigation.Screen
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.MoviesUIState
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.DashboardScreen
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieCard
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieErrorCard
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.SettingsScreen
+import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.viewmodel.PlaceHolderViewModel
 import com.digitssolutions.alloytelemetryandroid.presentation.util.Navigate
-import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.PlaceHolderViewModel
+import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.AppNavigationViewModel
 import com.digitssolutions.alloytelemetryandroid.ui.theme.AlloyTelemetryAndroidTheme
 
 
 @Composable
 fun InitialSetup(
     innerPadding: PaddingValues,
-    viewModel: PlaceHolderViewModel = hiltViewModel()
+    viewModel: AppNavigationViewModel = hiltViewModel()
 ) {
-    val moviesUIState by viewModel.moviesUIState.collectAsStateWithLifecycle()
-    val currentScreen by viewModel.backStack.collectAsState()
-
+    val currentScreen by viewModel.backStack.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
             Text(
@@ -47,7 +50,12 @@ fun InitialSetup(
         },
         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
         bottomBar = {
-            Navigate(viewModel)
+            val activeScreen = currentScreen.lastOrNull()
+            Navigate(
+                activeScreen = activeScreen,
+                onTabSelected = viewModel::onTabClicked
+            )
+
         },
         content = { rootInnerPadding ->
             Surface(
@@ -60,6 +68,10 @@ fun InitialSetup(
                     is Screen.Dashboard -> DashboardScreen()
                     is Screen.Settings -> SettingsScreen()
                     is Screen.Loading, is Screen.Explorer -> {
+
+                        /** 👈 PlaceHolderViewModel is ONLY created when this tab is active, memory-economical */
+                        val viewModel: PlaceHolderViewModel = hiltViewModel()
+                        val moviesUIState by viewModel.moviesUIState.collectAsStateWithLifecycle()
                         when (val mState = moviesUIState) {
                             is MoviesUIState.Loading -> {
                                 Box(
@@ -93,7 +105,6 @@ fun InitialSetup(
                     }
                     null -> {}
                 }
-
             }
         }
     )
@@ -104,7 +115,7 @@ fun InitialSetup(
 @Preview(showBackground = true)
 @Composable
 fun MoviesLandPreview() {
-    AlloyTelemetryAndroidTheme {
+    AlloyTelemetryAndroidTheme() {
         InitialSetup(
             innerPadding = PaddingValues()
         )
