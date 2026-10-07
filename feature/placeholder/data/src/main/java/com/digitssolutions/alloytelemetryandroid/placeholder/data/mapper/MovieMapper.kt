@@ -1,6 +1,6 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.data.mapper
 
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.dto.Result as DataPlaceHolderDtoResult
 
 

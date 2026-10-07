@@ -1,6 +1,6 @@
-package com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen
+package com.digitssolutions.alloytelemetryandroid.core.domain.navigation
 
-import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.experimentaldata.TelemetryData
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.TelemetryData
 
 sealed interface Screen {
     data object Loading : Screen

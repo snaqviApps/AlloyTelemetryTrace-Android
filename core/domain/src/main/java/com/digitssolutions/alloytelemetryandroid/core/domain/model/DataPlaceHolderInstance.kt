@@ -1,4 +1,6 @@
-package com.digitssolutions.alloytelemetryandroid.core.domain
+package com.digitssolutions.alloytelemetryandroid.core.domain.model
+
+import com.digitssolutions.alloytelemetryandroid.core.domain.DomainEntity
 
 /**
  * Domain-model (Entity)

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -21,6 +22,10 @@ android {
 }
 
 dependencies {
+
+    // Required for ViewModel scoping in Nav3
+    implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)

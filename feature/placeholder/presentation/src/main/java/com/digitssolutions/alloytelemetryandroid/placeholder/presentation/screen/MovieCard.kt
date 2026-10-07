@@ -1,4 +1,4 @@
-package com.digitssolutions.alloytelemetryandroid.presentation.screen
+package com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 
 @Composable
 fun MovieCard(

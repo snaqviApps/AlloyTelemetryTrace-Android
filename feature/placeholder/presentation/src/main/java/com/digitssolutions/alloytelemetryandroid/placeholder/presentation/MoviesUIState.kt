@@ -1,6 +1,6 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.presentation
 
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 
 sealed interface MoviesUIState {
     class Loading(val isLoading : Boolean) : MoviesUIState

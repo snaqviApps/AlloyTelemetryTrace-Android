@@ -1,7 +1,7 @@
 package com.digitssolutions.alloytelemetryandroid.core.domain.repository
 
 import com.digitssolutions.alloytelemetryandroid.core.domain.DomainEntity
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 
 interface MoviesRepository<out T : DomainEntity>  {
     suspend fun getMovies(

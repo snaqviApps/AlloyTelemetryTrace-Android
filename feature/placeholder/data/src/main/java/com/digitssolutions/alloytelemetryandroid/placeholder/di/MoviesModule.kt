@@ -1,6 +1,6 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.di
 
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 import com.digitssolutions.alloytelemetryandroid.core.domain.repository.MoviesRepository
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.repository.DefaultMoviesRepository
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.repository.MoviesRemoteSource

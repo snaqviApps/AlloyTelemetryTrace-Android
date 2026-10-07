@@ -1,4 +1,4 @@
-package com.digitssolutions.alloytelemetryandroid.presentation.screen
+package com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

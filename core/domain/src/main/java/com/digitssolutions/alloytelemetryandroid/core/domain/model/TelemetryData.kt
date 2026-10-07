@@ -1,4 +1,4 @@
-package com.digitssolutions.alloytelemetryandroid.placeholder.presentation.experimentaldata
+package com.digitssolutions.alloytelemetryandroid.core.domain.model
 
 import kotlinx.serialization.Serializable
 

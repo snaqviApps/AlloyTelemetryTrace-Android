@@ -1,7 +1,7 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.data.repository
 
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.mapper.toDomain
-import com.digitssolutions.alloytelemetryandroid.core.domain.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
 import com.digitssolutions.alloytelemetryandroid.core.domain.repository.MoviesRepository
 import javax.inject.Inject
 
