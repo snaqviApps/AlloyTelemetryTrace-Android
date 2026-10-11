@@ -19,14 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.PlaceHolderEntity
 
 @Composable
 fun MovieCard(
     innerPadding: PaddingValues,
-    dataPlaceHolderInstanceList: List<DataPlaceHolderInstance>?
+    moviesAsPlaceHolder: List<PlaceHolderEntity>?
 ) {
-    dataPlaceHolderInstanceList?.let {
+    moviesAsPlaceHolder?.let { movies->
         Card(
             modifier = Modifier.fillMaxSize()
                 .padding(
@@ -38,7 +38,7 @@ fun MovieCard(
                 .background(MaterialTheme.colorScheme.onBackground)
         ) {
             LazyColumn() {
-                items(dataPlaceHolderInstanceList) {
+                items(movies) {
                     Column(
                         modifier = Modifier.fillMaxSize()
                             .padding(2.dp)

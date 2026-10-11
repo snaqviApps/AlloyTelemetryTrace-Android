@@ -31,13 +31,12 @@ import com.digitssolutions.alloytelemetryandroid.presentation.util.Navigate
 import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.AppNavigationViewModel
 import com.digitssolutions.alloytelemetryandroid.ui.theme.AlloyTelemetryAndroidTheme
 
-
 @Composable
 fun InitialSetup(
     innerPadding: PaddingValues,
-    viewModel: AppNavigationViewModel = hiltViewModel()
+    appNavViewModel: AppNavigationViewModel = hiltViewModel()
 ) {
-    val currentScreen by viewModel.backStack.collectAsStateWithLifecycle()
+    val currentScreen by appNavViewModel.backStack.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
             Text(
@@ -53,9 +52,8 @@ fun InitialSetup(
             val activeScreen = currentScreen.lastOrNull()
             Navigate(
                 activeScreen = activeScreen,
-                onTabSelected = viewModel::onTabClicked
+                onTabSelected = appNavViewModel::onTabClicked
             )
-
         },
         content = { rootInnerPadding ->
             Surface(
@@ -98,7 +96,7 @@ fun InitialSetup(
                             is MoviesUIState.Success -> {
                                 MovieCard(
                                     innerPadding = PaddingValues(0.dp), // 👈 Surface already padded the parent
-                                    dataPlaceHolderInstanceList = mState.dataPlaceHolderInstance
+                                    moviesAsPlaceHolder = mState.placeHolderEntity
                                 )
                             }
                         }
