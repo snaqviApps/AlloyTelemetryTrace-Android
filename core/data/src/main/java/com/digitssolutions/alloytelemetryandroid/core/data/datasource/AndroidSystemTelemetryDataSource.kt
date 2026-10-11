@@ -67,7 +67,16 @@ class AndroidSystemTelemetryDataSource @Inject constructor(
         powerManager?.addThermalStatusListener(context.mainExecutor, thermalListener)
         telephonyManager?.registerTelephonyCallback(context.mainExecutor, telephonyCallback)
 
-        // 5. Unregister listeners upon scope cancellation
+        // 5. Apply Initial Connectivity ONE-TIME Snapshot directly to currentEntity
+        updateConnectivityState { cellular, wifi ->
+            currentEntity = currentEntity.copy(
+                isCellularConnected = cellular,
+                isWifiConnected = wifi
+            )
+            trySend(currentEntity)
+        }
+
+        // 6. Unregister listeners upon scope cancellation
         awaitClose {
             powerManager?.removeThermalStatusListener(thermalListener)
             telephonyManager?.unregisterTelephonyCallback(telephonyCallback)
