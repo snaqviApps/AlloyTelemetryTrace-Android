@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+
 @HiltViewModel
 class TelemetryViewModel @Inject constructor(
     private var telemetryRepository: TelemetryRepository<TelemetryReadiness>
@@ -30,5 +31,4 @@ class TelemetryViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = TelemetryUiState.Loading(true)
         )
-
 }

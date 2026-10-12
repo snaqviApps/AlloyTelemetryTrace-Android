@@ -22,13 +22,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.digitssolutions.alloytelemetryandroid.core.domain.navigation.Screen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.MoviesUIState
-import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.DashboardScreen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieCard
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieErrorCard
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.SettingsScreen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.viewmodel.PlaceHolderViewModel
 import com.digitssolutions.alloytelemetryandroid.presentation.util.Navigate
 import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.AppNavigationViewModel
+import com.digitssolutions.alloytelemetryandroid.telemetry.presentation.dashboard.DashboardScreen
 import com.digitssolutions.alloytelemetryandroid.ui.theme.AlloyTelemetryAndroidTheme
 
 @Composable

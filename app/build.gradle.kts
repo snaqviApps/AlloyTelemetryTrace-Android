@@ -51,6 +51,7 @@ dependencies {
     //:feature:placeholder:presentation
     implementation(project(":feature:placeholder:data"))
     implementation(project(":feature:placeholder:presentation"))
+    implementation(project(":feature:telemetry"))
 
     
     //Test

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -26,6 +27,18 @@ dependencies {
 
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
+
+    // Compose AndroidX
+    implementation(platform(libs.androidx.compose.bom)) // Added: Compose BOM
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+
+    // Add these two lines for Material Icons
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // hilt
     implementation(libs.hilt)

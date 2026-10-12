@@ -1,8 +1,8 @@
 package com.digitssolutions.alloytelemetryandroid.core.data.datasource
 
-import android.Manifest
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.PowerManager
@@ -12,7 +12,6 @@ import android.telephony.SignalStrength
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresApi
-import androidx.annotation.RequiresPermission
 import com.digitssolutions.alloytelemetryandroid.core.data.model.TelemetryDataEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
@@ -21,17 +20,16 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.S)
-class AndroidSystemTelemetryDataSource @Inject constructor(
+class AndroidSystemTelemetryDataSource @Inject constructor (
     @param:ApplicationContext private val context: Context
 ) : SystemTelemetryDataSource {
-
     private val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
     private val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
 
     override fun observeRawTelemetry(): Flow<TelemetryDataEntity> = callbackFlow {
 
-        // 1. Single Source of Truth: Initialize the rolling accumulator with real starting values
+        //  1. Single Source of Truth: Initialize the rolling accumulator with real starting values
         var currentEntity = TelemetryDataEntity(
             rawThermalStatus = powerManager?.currentThermalStatus ?: PowerManager.THERMAL_STATUS_NONE,
             rsrpDbm = 0,
@@ -63,37 +61,61 @@ class AndroidSystemTelemetryDataSource @Inject constructor(
             }
         }
 
-        // 4. Register listeners...
-        powerManager?.addThermalStatusListener(context.mainExecutor, thermalListener)
-        telephonyManager?.registerTelephonyCallback(context.mainExecutor, telephonyCallback)
+        // 2. Local helper function (Has access to currentEntity and trySend via closure!)
+        fun updateAndEmitConnectivity() {
+            val activeNetwork = connectivityManager?.activeNetwork
+            val capabilities = connectivityManager?.getNetworkCapabilities(activeNetwork)
+            val hasCellular = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
+            val hasWifi = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
 
-        // 5. Apply Initial Connectivity ONE-TIME Snapshot directly to currentEntity
-        updateConnectivityState { cellular, wifi ->
+            // Extract Wi-Fi RSSI from NetworkCapabilities transport info (API 29+)
+            val wifiInfo = capabilities?.transportInfo as? android.net.wifi.WifiInfo
+            val rssi = wifiInfo?.rssi ?: 0
+
             currentEntity = currentEntity.copy(
-                isCellularConnected = cellular,
-                isWifiConnected = wifi
+                isCellularConnected = hasCellular,
+                isWifiConnected = hasWifi,
+                wifiRssi = rssi
             )
-            trySend(currentEntity)
+            trySend(currentEntity)          // replaces last-type one-Shot update, at the launch, but step #4, below, give live udpates
         }
 
-        // 6. Unregister listeners upon scope cancellation
+        // 4. Create the live Network Callback,  Reusable helper that updates the rolling state and emits downstream
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                updateAndEmitConnectivity()             // <--- This updates currentEntity and calls trySend()
+            }
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                updateAndEmitConnectivity()
+            }
+
+            override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities
+            ) {
+                super.onCapabilitiesChanged(network, networkCapabilities)
+                updateAndEmitConnectivity()
+            }
+        }
+
+        // Register listeners...
+        powerManager?.addThermalStatusListener(context.mainExecutor, thermalListener)
+        telephonyManager?.registerTelephonyCallback(context.mainExecutor, telephonyCallback)
+        connectivityManager?.registerDefaultNetworkCallback(networkCallback)
+
+        // 6. Capture initial network state on launch
+        updateAndEmitConnectivity()
+
+        // Unregister listeners upon scope cancellation
         awaitClose {
             powerManager?.removeThermalStatusListener(thermalListener)
             telephonyManager?.unregisterTelephonyCallback(telephonyCallback)
+            connectivityManager?.unregisterNetworkCallback(networkCallback)
         }
 
     }
 
-    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
-    private fun updateConnectivityState(onStateChanged: (cellular: Boolean, wifi: Boolean) -> Unit )
-    {
-        val activeNetwork = connectivityManager?.activeNetwork
-        val capabilities = connectivityManager?.getNetworkCapabilities(activeNetwork)
-        val hasCellular = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
-        val hasWifi = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
-
-        onStateChanged(hasCellular, hasWifi)
-    }
 
     private fun extractRsrp(signalStrength: SignalStrength?): Int {
         if (signalStrength == null) return 0
