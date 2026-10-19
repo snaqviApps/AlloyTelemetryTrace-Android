@@ -5,7 +5,7 @@ import com.digitssolutions.alloytelemetryandroid.core.domain.DomainEntity
 /**
  * Domain-model (Entity)
  */
-data class DataPlaceHolderInstance (
+data class PlaceHolderEntity (
     val adult: Boolean?,
     val backdropPath: String?,
     val genreIds: List<Int>? = emptyList(),

@@ -22,22 +22,21 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.digitssolutions.alloytelemetryandroid.core.domain.navigation.Screen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.MoviesUIState
-import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.DashboardScreen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieCard
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieErrorCard
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.SettingsScreen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.viewmodel.PlaceHolderViewModel
 import com.digitssolutions.alloytelemetryandroid.presentation.util.Navigate
 import com.digitssolutions.alloytelemetryandroid.presentation.viewmodel.AppNavigationViewModel
+import com.digitssolutions.alloytelemetryandroid.telemetry.presentation.dashboard.DashboardScreen
 import com.digitssolutions.alloytelemetryandroid.ui.theme.AlloyTelemetryAndroidTheme
-
 
 @Composable
 fun InitialSetup(
     innerPadding: PaddingValues,
-    viewModel: AppNavigationViewModel = hiltViewModel()
+    appNavViewModel: AppNavigationViewModel = hiltViewModel()
 ) {
-    val currentScreen by viewModel.backStack.collectAsStateWithLifecycle()
+    val currentScreen by appNavViewModel.backStack.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
             Text(
@@ -53,9 +52,8 @@ fun InitialSetup(
             val activeScreen = currentScreen.lastOrNull()
             Navigate(
                 activeScreen = activeScreen,
-                onTabSelected = viewModel::onTabClicked
+                onTabSelected = appNavViewModel::onTabClicked
             )
-
         },
         content = { rootInnerPadding ->
             Surface(
@@ -98,7 +96,7 @@ fun InitialSetup(
                             is MoviesUIState.Success -> {
                                 MovieCard(
                                     innerPadding = PaddingValues(0.dp), // 👈 Surface already padded the parent
-                                    dataPlaceHolderInstanceList = mState.dataPlaceHolderInstance
+                                    moviesAsPlaceHolder = mState.placeHolderEntity
                                 )
                             }
                         }

@@ -45,7 +45,7 @@ currently planned as:
   - `core:domain`
   - `core:data`
   - `feature:placeholder:data`
-  - `feature:placeholder:presentation` ----> it has currently the Placeholder data (movies-List)
+  - `feature:placeholder:presentation` ----> Placeholder data (movies-List)
 
 - refactoring: 
   - moved endPoint @PlaceHoderViewModel.kt to `MutableStateFlow()` to decouple from Compose-runtime library

@@ -2,7 +2,7 @@ package com.digitssolutions.alloytelemetryandroid.placeholder.presentation.viewm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.PlaceHolderEntity
 import com.digitssolutions.alloytelemetryandroid.core.domain.repository.MoviesRepository
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.MoviesUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ const val API_KEY = "069de1d1938f6e8bd8e2096127ef987e"
 
 @HiltViewModel
 class PlaceHolderViewModel @Inject constructor (
-    private val moviesRepository: MoviesRepository<DataPlaceHolderInstance>
+    private val moviesRepository: MoviesRepository<PlaceHolderEntity>
 ) : ViewModel() {
     private val _moviesUIState = MutableStateFlow<MoviesUIState>(MoviesUIState.Loading(true))
     val moviesUIState = _moviesUIState.asStateFlow()
@@ -24,15 +24,13 @@ class PlaceHolderViewModel @Inject constructor (
     private val _endPoint =  MutableStateFlow<String>("popular")                             // Default endPoint
     val endPoint = _endPoint.asStateFlow()
 
-
-
     init {
         fetchMovies(endPoint.value)
     }
 
     private fun fetchMovies(defaultEndPoint: String) {
         viewModelScope.launch {
-            val result : Result<List<DataPlaceHolderInstance>> = moviesRepository.getMovies(
+            val result : Result<List<PlaceHolderEntity>> = moviesRepository.getMovies(
                 defaultCategory = defaultEndPoint,
                 apiKey = API_KEY,
                 page = 5
@@ -47,7 +45,5 @@ class PlaceHolderViewModel @Inject constructor (
             }
             }
         }
-
-
 
 }

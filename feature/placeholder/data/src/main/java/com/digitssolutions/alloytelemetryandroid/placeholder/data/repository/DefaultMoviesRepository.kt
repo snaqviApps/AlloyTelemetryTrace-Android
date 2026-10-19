@@ -1,7 +1,7 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.data.repository
 
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.mapper.toDomain
-import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.PlaceHolderEntity
 import com.digitssolutions.alloytelemetryandroid.core.domain.repository.MoviesRepository
 import javax.inject.Inject
 
@@ -10,12 +10,12 @@ import javax.inject.Inject
  */
 class DefaultMoviesRepository @Inject constructor (
     private val moviesRemoteSource: MoviesRemoteSource
-) : MoviesRepository<DataPlaceHolderInstance> {
+) : MoviesRepository<PlaceHolderEntity> {
     override suspend fun getMovies(
         defaultCategory: String,
         apiKey: String,
         page: Int
-    ): Result<List<DataPlaceHolderInstance>> {
+    ): Result<List<PlaceHolderEntity>> {
         return try {
             moviesRemoteSource.getMovies(
                 endPoint = defaultCategory,
@@ -25,8 +25,10 @@ class DefaultMoviesRepository @Inject constructor (
                 if (this.isSuccessful) {
                     val body = body()
                     if (body != null) {
-                        val dataPlaceHolderInstances: List<DataPlaceHolderInstance> = body.results.map { it.toDomain() }
-                        Result.success(dataPlaceHolderInstances)
+                        val placeHolderEntity: List<PlaceHolderEntity> = body
+                            .results
+                            .map { rawResult -> rawResult.toDomain() }
+                        Result.success(placeHolderEntity)
                     } else {
                         Result.failure(Exception("Exception "))
                     }

@@ -1,6 +1,6 @@
 package com.digitssolutions.alloytelemetryandroid.placeholder.di
 
-import com.digitssolutions.alloytelemetryandroid.core.domain.model.DataPlaceHolderInstance
+import com.digitssolutions.alloytelemetryandroid.core.domain.model.PlaceHolderEntity
 import com.digitssolutions.alloytelemetryandroid.core.domain.repository.MoviesRepository
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.repository.DefaultMoviesRepository
 import com.digitssolutions.alloytelemetryandroid.placeholder.data.repository.MoviesRemoteSource
@@ -87,7 +87,7 @@ abstract class DefaultMoviesRepositoryModule {
     @Singleton
     abstract fun bindDefaultMoviesRepository(
         defaultMoviesRepository: DefaultMoviesRepository
-    ) : MoviesRepository<DataPlaceHolderInstance>
+    ) : MoviesRepository<PlaceHolderEntity>
 
 }
 

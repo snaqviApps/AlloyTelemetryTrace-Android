@@ -17,29 +17,28 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
 }
 
 dependencies {
 
+    // Custom Library-Modules dependencies
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
 
     // Retrofit & OkHttp
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-
-    // hilt
+//
+//    // hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-
-    // Custom Library-Modules dependencies
-    implementation(project(":core:domain"))
-    implementation(project(":core:data"))
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
