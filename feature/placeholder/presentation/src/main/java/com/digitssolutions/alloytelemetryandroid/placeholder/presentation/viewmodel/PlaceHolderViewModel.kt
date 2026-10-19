@@ -44,6 +44,6 @@ class PlaceHolderViewModel @Inject constructor (
                 _moviesUIState.value = MoviesUIState.Error("${it.message}")
             }
             }
-        }
 
+        }
 }

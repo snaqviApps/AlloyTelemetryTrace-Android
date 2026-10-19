@@ -34,7 +34,7 @@ fun Navigate(
         )
         NavigationBarItem(
             icon = { Icon(Icons.AutoMirrored.Filled.List, contentDescription = "Movies Loader") },
-            label = { Text("Movies") },
+            label = { Text("Analysis") },
             selected = activeScreen is Screen.Explorer || activeScreen is Screen.Loading,
             onClick = { onTabSelected(Screen.Explorer) }
         )

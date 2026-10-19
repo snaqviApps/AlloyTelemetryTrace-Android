@@ -4,7 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class DeviceThermalState {
+    NONE,
     NORMAL,
+    LIGHT,
     MODERATE,
     SEVERE,
     CRITICAL,

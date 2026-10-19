@@ -1,11 +1,16 @@
 package com.digitssolutions.alloytelemetryandroid.presentation.screen
 
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -15,11 +20,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.media3.exoplayer.mediacodec.MediaCodecAdapter
+import androidx.media3.extractor.text.webvtt.WebvttCssStyle
 import com.digitssolutions.alloytelemetryandroid.core.domain.navigation.Screen
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.MoviesUIState
 import com.digitssolutions.alloytelemetryandroid.placeholder.presentation.screen.MovieCard
@@ -37,19 +51,35 @@ fun InitialSetup(
     appNavViewModel: AppNavigationViewModel = hiltViewModel()
 ) {
     val currentScreen by appNavViewModel.backStack.collectAsStateWithLifecycle()
+    val activeScreen = currentScreen.lastOrNull()
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            Text(
+            val headerTitle = when (activeScreen) {
+                is Screen.Dashboard -> "System Health Check"
+                is Screen.Explorer -> "PlaceHoder List: Movies"
+                is Screen.Settings -> "Settings"
+                else -> "Alloy Telemetry Trace"
+            }
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = innerPadding.calculateTopPadding() + 12.dp),
-                text = "This is Top Bar",
-                textAlign = TextAlign.Center
-            )
+                    .statusBarsPadding()
+                    .padding(start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = headerTitle,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontFamily = FontFamily.SansSerif,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color(0x926D6D7C) // Or your preferred top bar color
+//                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
         },
-        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
         bottomBar = {
-            val activeScreen = currentScreen.lastOrNull()
             Navigate(
                 activeScreen = activeScreen,
                 onTabSelected = appNavViewModel::onTabClicked
@@ -95,7 +125,7 @@ fun InitialSetup(
 
                             is MoviesUIState.Success -> {
                                 MovieCard(
-                                    innerPadding = PaddingValues(0.dp), // 👈 Surface already padded the parent
+                                    innerPadding = PaddingValues(2.dp), // 👈 Surface already padded the parent
                                     moviesAsPlaceHolder = mState.placeHolderEntity
                                 )
                             }
@@ -109,13 +139,14 @@ fun InitialSetup(
 
 }
 
-
-@Preview(showBackground = true)
+@Preview(name = "Light Mode", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(name = "Light Mode", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun MoviesLandPreview() {
     AlloyTelemetryAndroidTheme() {
         InitialSetup(
-            innerPadding = PaddingValues()
+            innerPadding = PaddingValues(),
+            viewModel()
         )
     }
 }

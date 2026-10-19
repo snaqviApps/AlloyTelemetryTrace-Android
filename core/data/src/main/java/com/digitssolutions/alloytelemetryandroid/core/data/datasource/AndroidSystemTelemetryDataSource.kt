@@ -29,6 +29,10 @@ class AndroidSystemTelemetryDataSource @Inject constructor (
 
     override fun observeRawTelemetry(): Flow<TelemetryDataEntity> = callbackFlow {
 
+        // 👈 PLACE IT HERE: Check live thermal status immediately when the flow starts
+        val currentSystemThermal = powerManager?.currentThermalStatus ?: -1
+        android.util.Log.d("TelemetryDebug", "Live system thermal status from OS on start: $currentSystemThermal")
+
         //  1. Single Source of Truth: Initialize the rolling accumulator with real starting values
         var currentEntity = TelemetryDataEntity(
             rawThermalStatus = powerManager?.currentThermalStatus ?: PowerManager.THERMAL_STATUS_NONE,
@@ -40,6 +44,7 @@ class AndroidSystemTelemetryDataSource @Inject constructor (
 
         // 2. Thermal listener updates only the thermal field
         val thermalListener = PowerManager.OnThermalStatusChangedListener { status ->
+            android.util.Log.d("TelemetryDebug", "Thermal listener triggered! New status: $status")
             currentEntity = currentEntity.copy(rawThermalStatus = status)
             trySend(currentEntity) // Emit the accumulated state
         }
@@ -106,6 +111,9 @@ class AndroidSystemTelemetryDataSource @Inject constructor (
 
         // 6. Capture initial network state on launch
         updateAndEmitConnectivity()
+
+        // FORCE INITIAL EMISSION: Ensure thermal sate is pushed immediately on collection start
+        trySend(currentEntity)
 
         // Unregister listeners upon scope cancellation
         awaitClose {
