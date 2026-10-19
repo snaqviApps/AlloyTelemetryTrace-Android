@@ -1,8 +1,7 @@
-# Reference Shell Architecture
+# Body Habits Empirical Analysis Presentation Tool
 
-This App is a reference-shell for clean architecture, along with Scaffold-provided UI utilities, 
-namely: topBar, baseBar, and content blocks, with innerPadding to coordinate due system-bars, 
-margins: [status-bar at top, bottom-bar and Camera-pin-hole cut-outs]
+This App is a a tool to revisit an individual habits, currently planned, snorting data patterns presentation. 
+Tech-base: Uses clean architecture, Compose-UI tookit: Scaffold-provided, topBar, baseBar, and content blocks. 
 
 [branch: dasbhboard-system-health-check-telemetry]
 This branch implements System-level health check or Pre-Flight Readiness matrix, providing Telemetry data,
@@ -49,3 +48,5 @@ currently planned as:
 
 - refactoring: 
   - moved endPoint @PlaceHoderViewModel.kt to `MutableStateFlow()` to decouple from Compose-runtime library
+
+  
