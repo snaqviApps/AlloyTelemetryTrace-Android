@@ -49,4 +49,17 @@ currently planned as:
 - refactoring: 
   - moved endPoint @PlaceHoderViewModel.kt to `MutableStateFlow()` to decouple from Compose-runtime library
 
-  
+  <table>
+  <!-- Row 1: Titles -->
+  <tr>
+    <td align="center" valign="bottom">
+      <b>Pre-Flight Health Telemetry Status </b>
+    </td>
+  </tr>
+  <!-- Row 2: Images -->
+  <tr>
+    <td valign="top">
+     <img width="1080" height="2400" alt="Screenshot_20261019_001649" src="https://github.com/user-attachments/assets/0232db17-fa01-482d-98ed-8b75e419e2c9" />
+    </td>
+  </tr>
+  </table>
